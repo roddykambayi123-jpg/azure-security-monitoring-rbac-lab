@@ -1,47 +1,71 @@
 # Azure Security Monitoring & RBAC Lab
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](#)
+![Azure](https://img.shields.io/badge/Cloud-Azure-blue)
+![Security](https://img.shields.io/badge/Focus-Security%20%26%20RBAC-orange)
 
-This project demonstrates how to configure and test security controls in Microsoft Azure, focusing on Role-Based Access Control (RBAC), storage account security, Azure Monitor alerts, and remediation.
+A hands-on mini-lab that:
+- Applies least-privilege access with **Azure RBAC**
+- Simulates an insecure change (**public blob access**)
+- Detects it with **Azure Monitor alerts** (email + dashboard)
+- Remediates by **disabling anonymous blob access** and verifies the block
 
-## Objectives
-- Configure least-privilege access with Azure RBAC
-- Simulate a misconfiguration (public blob access)
-- Detect unauthorized changes with Azure Monitor alerts
-- Remediate and validate secure storage configuration
+## What you’ll see
+- RBAC assignments at RG scope (Owner / Contributor / Reader)
+- Admin first-login password update flow
+- Developer can read blobs; Auditor is blocked from uploads
+- Activity Log alert for public access change (12 events fired in test)
+- Email notification and remediation proof (public access blocked)
 
-## Steps
+---
 
-### Step 1 – Role Assignments
-Using Azure CLI to assign Owner (admin.user), Contributor (dev.user), and Reader (aud.user) roles to different users in the resource group.
+## Steps Walkthrough
 
-### Step 2 – User Onboarding
-Setting up an admin.user account and forcing a password reset for first login.
+### Step 1 – Configure RBAC Assignments
+Owner, Contributor, and Reader roles applied at the resource group (`rg-minilab`) scope.  
+![RBAC role assignments](./screenshots/step1_0.png)
 
-### Step 3 – Developer User Access
-dev.user logged in successfully and could view blobs in the storage container.
+---
+
+### Step 2 – Admin First Login
+Admin account prompted to reset password on first sign-in.  
+![Admin password reset](./screenshots/step2_0.png)
+
+---
+
+### Step 3 – Developer Access
+Developer account (`dev.user`) accessing the blob container and successfully reading blobs.  
+![Developer access view](./screenshots/step3_0.png)
+
+---
 
 ### Step 4 – Auditor Restrictions
-aud.user tried to upload a blob but was denied — validating least-privilege RBAC.
+Auditor account (`aud.user`) attempting to upload a blob, blocked due to RBAC Reader role.  
+![Auditor denied upload](./screenshots/step4_0.png)
 
-### Step 5 – Configuring Alert Rules
-Created an Azure Monitor alert for administrative changes to blob access which triggered 12 alerts from the public blob access being changed.
+---
 
-### Step 6 – Email Alert Triggered
-Received an email notification when public blob access was attempted — showing that detection worked.
+### Step 5 – Azure Monitor Alerts Fired
+Azure Monitor detects blob access configuration changes and triggers multiple alerts.  
+![Azure Monitor alerts list](./screenshots/step5_0.png)
+
+---
+
+### Step 6 – Email Notification
+Email received confirming the alert `Detect-Public-Blob-AccessChange` was activated.  
+![Email notification](./screenshots/step6_0.png)
+
+---
 
 ### Step 7 – Remediation Proof
-Blob container access remained blocked for anonymous users, ensuring security.
+Attempting to enable public access results in failure – proving that anonymous blob access is blocked.  
+![Public access blocked](./screenshots/step7_0.png)
 
-## Screenshots include
-- RBAC assignments
-- Developer access to view the blobs
-- Auditor denied the rights to upload a file
-- Password reset from Admin account
-- Alert email
-- Alerts dashboard
-- Remediation proof
+---
 
 ## Key Takeaways
-- RBAC enforces least-privilege access
-- Azure Monitor provides real-time detection
-- Misconfigurations can be detected, alerted, and remediated
-- Documentation and evidence support portfolio use cases
+- **Least privilege** enforced using RBAC roles.
+- **Alert rules** detect sensitive configuration changes in real-time.
+- **Email notifications** ensure visibility of incidents.
+- **Remediation** (public access disabled) validated and proven.
+
+---
