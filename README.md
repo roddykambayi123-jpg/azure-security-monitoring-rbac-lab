@@ -69,3 +69,5 @@ Attempting to enable public access results in failure – proving that anonymous
 - **Remediation** (public access disabled) validated and proven.
 
 ---
+
+**Write-up & screenshots on LinkedIn:** <https://www.linkedin.com/feed/update/urn:li:activity:7366477859931971584/>
